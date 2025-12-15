@@ -180,25 +180,3 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 model = sm.OLS(y_train, X_train)
 results = model.fit()
 print(results.summary())
-
-
-# Save all tables except master_df to MySQL for star schema
-# MySQL connection details (update with your actual credentials)
-db_type = 'mysql'
-db_host = 'localhost'  # e.g., '112.213.86.31'
-db_port = '3306'  # e.g., '3360'
-db_user = 'Tuan'  # e.g., 'etl_practice'
-db_password = 'Tuan1234'  # e.g., '550814'
-db_name = 'HR-Analytics-Job-Change'  # e.g., 'company_course'
-
-engine = create_engine(f'{db_type}+pymysql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}')
-
-# Save dimension and fact tables to MySQL
-enrollee_df.to_sql('enrollee', engine, if_exists='replace', index=False)
-enrollies_education_df.to_sql('enrollies_education', engine, if_exists='replace', index=False)
-work_experience_df.to_sql('work_experience', engine, if_exists='replace', index=False)
-training_hours_df.to_sql('training_hours', engine, if_exists='replace', index=False)
-city_development_index_df.to_sql('city_development_index', engine, if_exists='replace', index=False)
-employment_df.to_sql('employment', engine, if_exists='replace', index=False)
-
-print("All tables (except master_df) saved to MySQL database for star schema.")
